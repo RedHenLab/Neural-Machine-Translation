@@ -29,11 +29,11 @@ def clean_lines(lines):
 		# normalize unicode characters
 		#line = normalize('NFD', line).encode('ascii', 'ignore')
 		#line = line.decode('UTF-8')
+		# tokenize usig moses tokenizer
+		line=tokenize(line)
 		#remove punctuation
 		translation_table=str.maketrans("","",string.punctuation)
 		line = line.translate(translation_table)
-		# tokenize usig moses tokenizer
-		line=tokenize(line)
 		# convert to lower case
 		line = [word.lower() for word in line]
 		# store it as a string
@@ -50,9 +50,11 @@ def save_clean_sentences(sentences, filename):
 
 if __name__=="__main__":
 	# load tokenized data for cleaning
-	filename = sys.argv[1]
-	lang=sys.argv[2]
-	doc = load_doc(filename)
-	sentences = to_sentences(doc)
-	sentences = clean_lines(sentences)
-	save_clean_sentences(sentences, filename+'.processed') 
+        filename = sys.argv[1]
+        lang=sys.argv[2]
+        doc = load_doc(filename)
+        sentences = to_sentences(doc)
+        print(sentences[-1])
+        sentences = clean_lines(sentences)
+        print(sentences[-1])
+        save_clean_sentences(sentences, filename+'.processed') 
