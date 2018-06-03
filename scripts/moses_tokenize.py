@@ -1,4 +1,4 @@
-##python code to tokenize a file
+# coding=utf-8
 from __future__ import print_function
 import string
 import re,sys,os,codecs

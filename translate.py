@@ -103,7 +103,7 @@ def main():
 	dicts = dataset["dicts"]
 
 	if opt.load_from is None:
-		print("Mamla gadbad gadbad\n")
+		print("REQUIRES PATH TO THE TRAINED MODEL\n")
 	else:
 		print("Loading from checkpoint at %s" % opt.load_from)
 		checkpoint = torch.load(opt.load_from)
@@ -122,9 +122,9 @@ def main():
 	res["tgt"]=tgt
 	res["pos"]=pos
 	test_data  = lib.Dataset(res, opt.batch_size, opt.cuda, eval=False)
-	pred_file = opt.load_from.replace(".pt", ".test.pred")
-	print('Generating translations\n')
+	pred_file = opt.test_src+".pred"
 	predict(model,dicts,test_data,pred_file)
+	print('Generated translations successfully\n')
 
 if __name__ == "__main__":
     main()
