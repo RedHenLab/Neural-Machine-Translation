@@ -50,6 +50,16 @@ This project is inspired by the approaches mentioned in the paper [An Actor-Crit
   ```
 * **Note** that the virtual environment(myenv) created using virtualenv command mentioned above, should be of **Python2** .
 
+## Data Preparation and Preprocessing
+
+Please note that these data preparation steps have to be done manually as we are dealing with a Multilingual system and each language pair might have different sources of data. For instance, we are using a concatenation of three data sources for European languages, that are [Europarl](http://www.statmt.org/europarl/), [CommonCrawl](  http://www.statmt.org/wmt13/training-parallel-commoncrawl.tgz
+) and [NewsCommentary](  http://data.statmt.org/wmt16/translation-task/training-parallel-nc-v11.tgz
+).
+
+## Training
+
+## Translation
+
 
 ## Acknowledgements
 
