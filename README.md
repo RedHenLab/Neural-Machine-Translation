@@ -54,12 +54,35 @@ This project is inspired by the approaches mentioned in the paper [An Actor-Crit
 
 Please note that these data preparation steps have to be done manually as we are dealing with a Multilingual system and each language pair might have different sources of data. For instance, we are using a concatenation of three data sources for European languages, that are [Europarl](http://www.statmt.org/europarl/), [CommonCrawl](  http://www.statmt.org/wmt13/training-parallel-commoncrawl.tgz
 ) and [NewsCommentary](  http://data.statmt.org/wmt16/translation-task/training-parallel-nc-v11.tgz
-).
+). Once we are done with the data preparation, one needs to process each and every file of the entire dataset by the following commands:
+ ```bash
+ python strip.py <filename1> <filename2>
+ python preprocess.py <filename> <language-code>
+ ```
+The python file **strip.py** takes the two files of parallel corpus as input and remove the empty lines and its correspondances in any of the two files.
+
+The python file **preprocess.py** takes a single file as input and removes any unwanted characters, punctuation marks and tokenizes the file using mosesTokenizer.
 
 ## Training
 
+To train a model on CASE HPC one needs to run the train.sh file placed in Neural-Machine-translation/scripts folder. The parameters for training are kept such that a model can be efficiently trained for any newly introduced language pair. The prerequisite for training a model is that the parallel data as described in **Installation** section should be residing in the concerned language pair directory in the data folder. The trained models will be saved in the language pair directory in the models folder. To train a model on CASE HPC, run the following command:
+ 
+ ```bash
+ cd Neural-Machine-Translation/scripts
+ sbatch train.sh <src-language-code> <target-language-code>
+ # For example to train a model for German->English one should type the following command
+ sbatch train.sh de en
+ ```
+ 
 ## Translation
 
+To translate any input news transcript, run he following commands:
+ ```bash
+ cd Neural-Machine-Translation/scripts
+ sbatch translate.sh <src-language-code> <target-language-code> <path-of-news-transcript>
+ 
+ # Note that the output translated transcipt will be saved in the same directory containing the input news transcript and with a ".pred" string appended to the name of the input news transcript.
+ ```
 
 ## Acknowledgements
 
