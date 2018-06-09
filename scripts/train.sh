@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -c 12
-#SBATCH --mem-per-cpu=1G
+#SBATCH --mem-per-cpu=2G
 #SBATCH -p gpu -C gpuk40 --gres=gpu:1
 #SBATCH --time=10-00:30:00
 #SBATCH --mail-type=ALL
@@ -17,7 +17,7 @@ src=$1
 tgt=$2
 lang=${1}-${2}
 
-export HOME=~
+export HOME=$(pwd)/../..
 export DATA=$HOME/data
 export DATA_PREP=$DATA/$lang
 export MODELS=$HOME/models/$lang

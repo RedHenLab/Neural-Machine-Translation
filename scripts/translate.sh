@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -c 12
-#SBATCH --mem-per-cpu=1G
+#SBATCH --mem-per-cpu=2G
 #SBATCH -p gpu -C gpuk40 --gres=gpu:1
 #SBATCH --time=10-00:30:00
 #SBATCH --mail-type=ALL
@@ -18,7 +18,7 @@ tgt=$2
 input_file=$3
 lang=${1}-${2}
 
-export HOME=~
+export HOME=$(pwd)/../..
 export DATA=$HOME/data
 export DATA_PREP=$DATA/$lang
 export MODELS=$HOME/models/$lang
@@ -34,5 +34,6 @@ source $HOME/myenv/bin/activate
 python $SCRIPT/parse.py $input_file
 #python $SCRIPT/moses_tokenize.py $SCRIPT/tmp.txt de
 python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_all-train.pt -load_from $MODELS/model_25_reinforce.pt -test_src $SCRIPT/tmp.txt
+sed -r 's/(@@ )|(@@ ?$)//g' tmp.txt.pred
 python $SCRIPT/output.py $input_file
 rm $SCRIPT/tmp.txt*
