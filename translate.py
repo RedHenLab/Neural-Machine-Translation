@@ -46,8 +46,8 @@ if torch.cuda.is_available() and not opt.cuda:
     print("WARNING: You have a CUDA device, so you should probably run with -gpus 1")
 
 if opt.cuda:
-    cuda.set_device(opt.gpus[0])
-    torch.cuda.manual_seed(opt.seed)
+    	cuda.set_device(opt.gpus[0])
+   	torch.cuda.manual_seed(opt.seed)
 
 def makeTestData(srcFile,dicts):	
 	print("Processing %s ..." % srcFile)
@@ -113,7 +113,7 @@ def main():
 	# GPU.
 	if opt.cuda:
 		model.cuda(opt.gpus[0])
-
+		
     	# Generating Translations for test set
 	print('Creating test data\n')
 	src,tgt,pos=makeTestData(opt.test_src,dicts)
