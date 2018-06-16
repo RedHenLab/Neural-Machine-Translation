@@ -1,0 +1,19 @@
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/bin/nvidia-smi'
+[0mSingularity: Invoking an interactive shell within container...
+
+[0mTokenizer Version 1.1
+Language: de
+Number of threads: 1
+/home/vxg195/Neural-Machine-Translation/scripts/../../Neural-Machine-Translation/subword-nmt/apply_bpe.py:331: DeprecationWarning: this script's location has moved to /home/vxg195/Neural-Machine-Translation/subword-nmt/subword_nmt. This symbolic link will be removed in a future version. Please point to the new location, or install the package and use the command 'subword-nmt'
+  DeprecationWarning
+Namespace(batch_size=32, data='/home/vxg195/Neural-Machine-Translation/scripts/../../data/de-en/processed_all-train.pt', gpus=[0], load_from='/home/vxg195/Neural-Machine-Translation/scripts/../../models/de-en/model_25_reinforce.pt', log_interval=100, save_dir=None, seed=3435, test_src='/home/vxg195/Neural-Machine-Translation/scripts/../../Neural-Machine-Translation/scripts/tmp.txt')
+Loading train data from "/home/vxg195/Neural-Machine-Translation/scripts/../../data/de-en/processed_all-train.pt"
+Loading from checkpoint at /home/vxg195/Neural-Machine-Translation/scripts/../../models/de-en/model_25_reinforce.pt
+Creating test data
+
+Processing /home/vxg195/Neural-Machine-Translation/scripts/../../Neural-Machine-Translation/scripts/tmp.txt ...
+... 326 sentences prepared for testing
+/home/vxg195/Neural-Machine-Translation/lib/model/GlobalAttention.py:30: UserWarning: Implicit dimension choice for softmax has been deprecated. Change the call to include dim=X as an argument.
+  attn = self.sm(attn)
+Generated translations successfully
+

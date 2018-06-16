@@ -2,7 +2,7 @@
 #SBATCH -N 1
 #SBATCH -c 12
 #SBATCH --mem-per-cpu=3G
-#SBATCH -p gpu -C gpuk40 --gres=gpu:2
+#SBATCH -p gpu -C gpuk40 --gres=gpu:1
 #SBATCH --time=10-00:30:00
 #SBATCH --mail-type=ALL
 #SBATCH --output=slurm-translate.out
@@ -33,9 +33,10 @@ source $HOME/myenv/bin/activate
 
 
 python $SCRIPT/parse.py $input_file
-#python $SCRIPT/moses_tokenize.py $SCRIPT/tmp.txt de
-../subword-nmt/apply_bpe.py -c ../subword-nmt/bpe.32000 < tmp.txt > tmp.txt.bpe
-mv tmp.txt.bpe tmp.txt
+perl $SCRIPT/tokenizer.perl -l $src < tmp.txt > tmp.txt.tok
+perl $SCRIPT/lowercase.perl < tmp.txt.tok > tmp.txt.tok.low
+$HOME/Neural-Machine-Translation/subword-nmt/apply_bpe.py -c $HOME/Neural-Machine-Translation/subword-nmt/$lang/bpe.32000 < tmp.txt.tok.low > tmp.txt.tok.low.bpe
+mv tmp.txt.tok.low.bpe tmp.txt
 python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_all-train.pt -load_from $MODELS/model_25_reinforce.pt -test_src $SCRIPT/tmp.txt
 sed -r -i 's/(@@ )|(@@ ?$)//g' tmp.txt.pred
 python $SCRIPT/output.py $input_file
