@@ -240,6 +240,7 @@ def main():
         xent_trainer = lib.Trainer(model, bandit_data, test_data, metrics, dicts, optim, opt)
         xent_trainer.train(opt.start_epoch, opt.start_epoch)
     else:
+	print("theek hai")
         xent_trainer = lib.Trainer(model, supervised_data, valid_data, metrics, dicts, optim, opt)
         if use_critic:
             start_time = time.time()

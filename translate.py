@@ -6,6 +6,7 @@ import time
 
 import torch
 import torch.nn as nn
+import torch.nn.parallel
 from torch import cuda
 from torch.autograd import Variable
 
@@ -44,6 +45,8 @@ if opt.save_dir and not os.path.exists(opt.save_dir):
 
 if torch.cuda.is_available() and not opt.cuda:
     print("WARNING: You have a CUDA device, so you should probably run with -gpus 1")
+
+#device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 if opt.cuda:
     	cuda.set_device(opt.gpus[0])
@@ -113,6 +116,10 @@ def main():
 	# GPU.
 	if opt.cuda:
 		model.cuda(opt.gpus[0])
+		#model=torch.nn.DataParallel(model)
+		#torch.distributed.init_process_group(backend='tcp',rank=0,world_size=2)
+		#model = torch.nn.parallel.DistributedDataParallel(model)
+
 		
     	# Generating Translations for test set
 	print('Creating test data\n')

@@ -30,8 +30,10 @@ singularity shell -w --nv rh_xenial_20180308.img
 
 cd $SCRIPT
 source $HOME/myenv/bin/activate
+toggle=1
 
-
+if [ $toggle -eq 0 ]
+then
 python $SCRIPT/parse.py $input_file
 perl $SCRIPT/tokenizer.perl -l $src < tmp.txt > tmp.txt.tok
 perl $SCRIPT/lowercase.perl < tmp.txt.tok > tmp.txt.tok.low
@@ -41,8 +43,8 @@ python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_
 sed -r -i 's/(@@ )|(@@ ?$)//g' tmp.txt.pred
 python $SCRIPT/output.py $input_file
 rm $SCRIPT/tmp.txt*
+fi
 
-toggle=0
 #### To translate a simple file not in the news transcript format:
 if [ $toggle -eq 1 ]
 then
