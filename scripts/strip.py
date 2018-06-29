@@ -13,6 +13,8 @@ with open(file1) as f1, open(file2) as f2:
 	for x,y in izip(text1,text2):
 		x=x.strip()
 		y=y.strip()
+		x=x.decode("utf-8").replace(u"\uFDD3",'').encode("utf-8")
+		y=y.decode("utf-8").replace(u"\uFDD3",'').encode("utf-8")
 		if len(x)>=1 and len(y)>=1:
 			print(x,file=fout1)
 			print(y,file=fout2)

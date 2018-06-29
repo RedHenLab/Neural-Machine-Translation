@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -c 12
-#SBATCH --mem-per-cpu=3G
+#SBATCH --mem-per-cpu=4G
 #SBATCH -p gpu -C gpuk40 --gres=gpu:1
 #SBATCH --time=10-00:30:00
 #SBATCH --mail-type=ALL
@@ -30,7 +30,7 @@ singularity shell -w --nv rh_xenial_20180308.img
 
 cd $SCRIPT
 source $HOME/myenv/bin/activate
-toggle=1
+toggle=0
 
 if [ $toggle -eq 0 ]
 then
@@ -39,7 +39,7 @@ perl $SCRIPT/tokenizer.perl -l $src < tmp.txt > tmp.txt.tok
 perl $SCRIPT/lowercase.perl < tmp.txt.tok > tmp.txt.tok.low
 $HOME/Neural-Machine-Translation/subword-nmt/apply_bpe.py -c $HOME/Neural-Machine-Translation/subword-nmt/$lang/bpe.32000 < tmp.txt.tok.low > tmp.txt.tok.low.bpe
 mv tmp.txt.tok.low.bpe tmp.txt
-python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_all-train.pt -load_from $MODELS/model_25_reinforce.pt -test_src $SCRIPT/tmp.txt
+python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_all-train.pt -load_from $MODELS/model*_best.pt -test_src $SCRIPT/tmp.txt
 sed -r -i 's/(@@ )|(@@ ?$)//g' tmp.txt.pred
 python $SCRIPT/output.py $input_file
 rm $SCRIPT/tmp.txt*
@@ -48,7 +48,7 @@ fi
 #### To translate a simple file not in the news transcript format:
 if [ $toggle -eq 1 ]
 then
-	python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_all-train.pt -load_from $MODELS/model_25_reinforce.pt -test_src $input_file
+	python $HOME/Neural-Machine-Translation/translate.py -data $DATA_PREP/processed_all-train.pt -load_from $MODELS/model*_best.pt -test_src $input_file
 	input_file="$input_file.pred"
 	sed -r -i 's/(@@ )|(@@ ?$)//g' $input_file
 fi

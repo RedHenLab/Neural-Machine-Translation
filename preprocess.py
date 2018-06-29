@@ -38,7 +38,7 @@ parser.add_argument("-src_vocab_size", type=int, default=50000,
 parser.add_argument("-tgt_vocab_size", type=int, default=50000,
                     help="Size of the target vocabulary")
 
-parser.add_argument("-seq_length", type=int, default=50,
+parser.add_argument("-seq_length", type=int, default=80,
                     help="Maximum sequence length")
 parser.add_argument("-seed",       type=int, default=3435,
                     help="Random seed")

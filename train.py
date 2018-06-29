@@ -89,7 +89,7 @@ parser.add_argument("-reinforce_lr", type=float, default=1e-4,
 parser.add_argument("-eval", action="store_true", help="Evaluate model only")
 parser.add_argument("-eval_sample", action="store_true", default=False,
         help="Eval by sampling")
-parser.add_argument("-max_predict_length", type=int, default=50,
+parser.add_argument("-max_predict_length", type=int, default=80,
                     help="Maximum length of predictions.")
 
 

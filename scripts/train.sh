@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH -N 1
 #SBATCH -c 12
-#SBATCH --mem-per-cpu=2G
+#SBATCH --mem-per-cpu=4G
 #SBATCH -p gpu -C gpuk40 --gres=gpu:1
 #SBATCH --time=10-00:30:00
 #SBATCH --mail-type=ALL
@@ -49,4 +49,4 @@ python ../preprocess.py \
   -save_data $DATA_PREP/processed_all
 
 ##Train a model(might take days for training)
-python $HOME/Neural-Machine-Translation/train.py -data $DATA_PREP/processed_all-train.pt -layers 4 -word_vec_size 512 -brnn -batch_size 128 -dropout 0.3 -save_dir $MODELS -start_reinforce 15 -critic_pretrain_epochs 4 -end_epoch 25
+#python $HOME/Neural-Machine-Translation/train.py -data $DATA_PREP/processed_all-train.pt -layers 4 -word_vec_size 512 -brnn -batch_size 128 -dropout 0.3 -save_dir $MODELS -end_epoch 15
