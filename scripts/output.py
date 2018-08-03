@@ -18,6 +18,7 @@ f.close()
 f1=open(input_file+".pred",'a')
 sent_index=0
 credit_flag=0
+lang=""
 for line in content:
 	l=line.split('|')
 	if l[0] in fields:

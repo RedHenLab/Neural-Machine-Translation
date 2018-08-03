@@ -3,7 +3,7 @@
 src=$1
 tgt=$2
 lang=$1-$2
-script=~/Neural-Machine-Translation/scripts/
+script=../../Neural-Machine-Translation/scripts/
 
 python $script/strip.py train.$lang.$src train.$lang.$tgt
 perl $script/lowercase.perl < train.$lang.$src.cleaned > train.$lang.$src.cleaned.low
@@ -41,5 +41,4 @@ mv test.$lang.$tgt.cleaned.low.tok.bpe test.$lang.$tgt.processed
 rm *tok
 rm *cleaned
 rm *low
-rm *bpe
 
