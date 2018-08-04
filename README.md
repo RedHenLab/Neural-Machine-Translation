@@ -8,6 +8,18 @@ The system uses Reinforcement Learning(Advantage-Actor-Critic algorithm) on the 
 
 This project is inspired by the approaches mentioned in the paper [An Actor-Critic Algorithm for Sequence Prediction](https://arxiv.org/pdf/1607.07086).
 
+The following languages are supported as the source language & the below are their language codes:
+1) **German - de**
+2) **French - fr**
+3) **Russian - ru**
+4) **Czech - cs**
+5) **Spanish - es**
+6) **Portuguese - pt**
+7) **Danish - da**
+8) **Swedish - sv**
+9) **Chinese - zh**
+The target language is English(en).
+
 ## Getting Started
 
 ### Prerequisites
