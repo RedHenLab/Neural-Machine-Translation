@@ -20,9 +20,9 @@ This project is inspired by the approaches mentioned in the paper [An Actor-Crit
 
 ### Installation & Setup Instructions on CASE HPC
 
-* **Users which want the pipeline to work on case HPC, just copy the directory named **nmt** from the home directory of my hpc acoount i.e /home/vxg195 & then follow the instructions described for training & translation.**
+* Users who want the pipeline to work on case HPC, just copy the directory named **nmt** from the home directory of my hpc acoount i.e **/home/vxg195** & then follow the instructions described for training & translation.
 
-* nmt directory will contain the folowing subdirectories:
+* nmt directory will contain the following subdirectories:
   * singularity
   * data
   * models
@@ -77,7 +77,7 @@ To train a model on CASE HPC one needs to run the train.sh file placed in Neural
  # For example to train a model for German->English one should type the following command
  sbatch train.sh de en
  ```
-After training, the trained model will be saved in language($src-$tgt) subdirectory in the models directory. the saved model would be something like "model_15.pt" and it should be renamed to model_15_best.pt". 
+After training, the trained model will be saved in language($src-$tgt) subdirectory in the models directory. the saved model would be something like "model_15.pt" and it should be renamed to "model_15_best.pt". 
 
 ## Translation
 This project supports translation of both normal text file or news transcripts in any supported language pair.
@@ -91,7 +91,7 @@ To translate any normal text file, run the following commands:
  cd Neural-Machine-Translation/scripts
  sbatch translate.sh <src-language-code> <target-language-code> <path-of-news-transcript> 1
  ```
- # Note that the output translated file will be saved in the same directory containing the input file and with a ".pred" string appended to the name of the input file.
+**Note that the output translated file will be saved in the same directory containing the input file and with a ".pred" string appended to the name of the input file.**
 
 ## Acknowledgements
 
