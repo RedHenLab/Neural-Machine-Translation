@@ -8,6 +8,9 @@ The system uses Reinforcement Learning(Advantage-Actor-Critic algorithm) on the 
 
 This project is inspired by the approaches mentioned in the paper [An Actor-Critic Algorithm for Sequence Prediction](https://arxiv.org/pdf/1607.07086).
 
+I have made a GSoC blog, please refer to it for my all GSoC blogposts about the progress made so far.
+Blog link: https://vikrant97.github.io/gsoc_blog/
+
 The following languages are supported as the source language & the below are their language codes:
 1) **German - de**
 2) **French - fr**
