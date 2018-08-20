@@ -108,6 +108,12 @@ To translate any normal text file, run the following commands:
  ```
 **Note that the output translated file will be saved in the same directory containing the input file and with a ".pred" string appended to the name of the input file.**
 
+## Evaluation of the trained model
+For evaluation, generate translation of any source test corpora. Now, we need to test its efficiency against the original target test corpus. For this, we use multi-bleu.perl script residing in the scripts directory which measures the corpus BLEU score. Usage instructions:
+```bash
+perl scripts/multi-bleu.perl $reference-file < $hypothesis-file
+```
+
 ## Acknowledgements
 
 * [Google Summer of Code 2018](https://summerofcode.withgoogle.com/)
