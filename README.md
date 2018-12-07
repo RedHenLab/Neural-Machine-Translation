@@ -35,7 +35,7 @@ The target language is English(en).
 
 ### Installation & Setup Instructions on CASE HPC
 
-* Users who want the pipeline to work on case HPC, just copy the directory named **nmt** from the home directory of my hpc acoount i.e **/home/vxg195** & then follow the instructions described for training & translation.
+* Users who want the pipeline to work on case HPC, just copy the directory named **nmt** from the home directory of my hpc account i.e **/home/vxg195** & then follow the instructions described for training & translation.
 
 * nmt directory will contain the following subdirectories:
   * singularity
@@ -44,7 +44,7 @@ The target language is English(en).
   * Neural-Machine-Translation 
   * myenv
 
-* The **singularity** directory contains a singularity image(rh_xenial_20180308.img) which is copied from the home directory of **Mr. Michael Pacchioli's CASE HPC account**. This singularity image contains some modules like CUDA and CUDANN needed for the system. 
+* The **singularity** directory contains a singularity image(rh_xenial_20180308.img) which is copied from the home directory of **Mr. Michael Pacchioli's CASE HPC account**. This singularity image contains some modules like CUDA and cuDNN needed for the system. 
 
 * The **data** directory consists of cleaned & processed datasets of respective language pairs. The subdirectories of this directory should be named like **de-en** where **de** & **en** are the language codes for **German** & **English**. So for any general language pair whose source language is **$src** and the target language is **$tgt**, the language data subdirectory should be named as **$src-$tgt** and it should contain the following files(train, validation & test):
   * train.$src-$tgt.$src.processed
@@ -67,7 +67,7 @@ The target language is English(en).
 
 ## Data Preparation and Preprocessing
 
-Please note that these data preparation steps have to be done manually as we are dealing with a Multilingual system and each language pair might have different sources of data. For instance, I used many different data sources like europarl, newscommentary, commoncrawl & other opern source datasets. One can have a look at shared task on Machine Translation i.e. WMT, to get better datasets. I wrote a bash script which can be used to process & prepare dataset for MT. The following steps can be used to prepare dataset for MT:
+Please note that these data preparation steps have to be done manually as we are dealing with a Multilingual system and each language pair might have different sources of data. For instance, I used many different data sources like europarl, news commentary, commoncrawl & other opern source datasets. One can have a look at shared task on Machine Translation i.e. WMT, to get better datasets. I wrote a bash script which can be used to process & prepare dataset for MT. The following steps can be used to prepare dataset for MT:
 1) First copy the raw dataset files in the language($src-$tgt) subdirectory of the data directory in the following format:
   * train.$src-$tgt.$src
   * train.$src-$tgt.$tgt
@@ -84,7 +84,7 @@ Please note that these data preparation steps have to be done manually as we are
 
 ## Training
 
-To train a model on CASE HPC one needs to run the train.sh file placed in Neural-Machine-translation/scripts folder. The parameters for training are kept such that a model can be efficiently trained for any newly introduced language pair, but one needs to tune the parameters according to the dataset. The prerequisite for training a model is that the parallel data as described in **Installation** section should be residing in the concerned language pair directory in the data folder. The trained models will be saved in the language pair directory in the models folder. To train a model on CASE HPC, run the following command:
+To train a model on CASE HPC one needs to run the train.sh file placed in Neural-Machine-translation/scripts folder. The parameters for training are kept such that a model can be efficiently trained for any newly introduced language pair, but one needs to tune the parameters according to the dataset. The prerequisite for training a model is that the parallel data as described in **Installation** section should be residing in the concerned language pair directory in the data folder. The trained models will be saved in the language pair directory in the model's folder. To train a model on CASE HPC, run the following command:
  
  ```bash
  cd Neural-Machine-Translation/scripts
@@ -92,7 +92,7 @@ To train a model on CASE HPC one needs to run the train.sh file placed in Neural
  # For example to train a model for German->English one should type the following command
  sbatch train.sh de en
  ```
-After training, the trained model will be saved in language($src-$tgt) subdirectory in the models directory. the saved model would be something like "model_15.pt" and it should be renamed to "model_15_best.pt". 
+After training, the trained model will be saved in language($src-$tgt) subdirectory in the model's directory. the saved model would be something like "model_15.pt" and it should be renamed to "model_15_best.pt". 
 
 ## Translation
 This project supports translation of both normal text file or news transcripts in any supported language pair.
