@@ -57,12 +57,22 @@ The target language is English(en).
 * The **models** directory consists of trained models for the respective language pairs and also follows the same structure of subdirectories as **data** directory. For example, **models/de-en** will contains trained models for the **German-English** language pair.
 
 * The following commands were used to install dependencies for the project:
+**UNIX/LINUX:**
   ```bash
   $ git clone https://github.com/RedHenLab/Neural-Machine-Translation.git
   $ virtualenv myenv
   $ source myenv/bin/activate
   $ pip install -r Neural-Machine-Translation/requirements.txt
   ```
+**Windows:**
+  ```bash
+  > git clone https://github.com/RedHenLab/Neural-Machine-Translation.git
+  > virtualenv myenv
+  > cd myenv/bin/
+  > activate
+  > pip install -r Neural-Machine-Translation/requirements.txt
+  ```
+
 * **Note** that the virtual environment(myenv) created using virtualenv command mentioned above, should be of **Python2** .
 
 ## Data Preparation and Preprocessing
