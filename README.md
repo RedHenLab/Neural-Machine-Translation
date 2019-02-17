@@ -57,6 +57,7 @@ The target language is English(en).
 * The **models** directory consists of trained models for the respective language pairs and also follows the same structure of subdirectories as **data** directory. For example, **models/de-en** will contains trained models for the **German-English** language pair.
 
 * The following commands were used to install dependencies for the project:
+
 **UNIX/LINUX:**
   ```bash
   $ git clone https://github.com/RedHenLab/Neural-Machine-Translation.git
