@@ -92,10 +92,10 @@ To train a model on CASE HPC one needs to run the train.sh file placed in Neural
  # For example to train a model for German->English one should type the following command
  sbatch train.sh de en
  ```
-After training, the trained model will be saved in language($src-$tgt) subdirectory in the models directory. the saved model would be something like "model_15.pt" and it should be renamed to "model_15_best.pt". 
+After training, the trained model will be saved in language($src-$tgt) subdirectory in the models directory. The saved model would be something like "model_15.pt" and it should be renamed to "model_15_best.pt". 
 
 ## Translation
-This project supports translation of both normal text file or news transcripts in any supported language pair.
+This project supports translation of both normal text file and news transcripts in any supported language pair.
 To translate any input news transcript, run the following commands:
  ```bash
  cd Neural-Machine-Translation/scripts
