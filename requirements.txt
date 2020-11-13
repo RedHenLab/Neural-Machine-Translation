@@ -27,7 +27,7 @@ PyYAML==3.12
 requests>=2.20.0
 six==1.11.0
 subprocess32==3.2.7
-tensorflow-gpu==1.5.0
+tensorflow-gpu==2.3.1
 tensorflow-tensorboard==1.5.1
 torch==0.3.1
 torchtext==0.2.1
