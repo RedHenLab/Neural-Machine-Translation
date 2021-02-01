@@ -59,6 +59,7 @@ def makeVocabulary(filename, size):
             for word in sent.split():
 		#vocab.add(word)
                 vocab.add(word.lower())  # Lowercase all words
+    f.close()
 
     originalSize = vocab.size()
     vocab = vocab.prune(size)
