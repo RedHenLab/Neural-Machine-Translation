@@ -14,7 +14,7 @@ idna==2.6
 Markdown==2.6.11
 matplotlib==2.1.2
 mock==2.0.0
-nltk==3.2.5
+nltk==3.6.3
 numpy==1.14.1
 pbr==3.1.1
 Pillow==5.0.0
