@@ -1,6 +1,6 @@
 # Multilingual Neural Machine Translation System for TV News
 
-_This is my [Google summer of Code 2018](https://summerofcode.withgoogle.com/projects/#6685973346254848) Project with [the Distributed Little Red Hen Lab](http://www.redhenlab.org/)._
+_This is my [Google Summer of Code 2018](https://summerofcode.withgoogle.com/projects/#6685973346254848) Project with [the Distributed Little Red Hen Lab](http://www.redhenlab.org/)._
 
 The aim of this project is to build a Multilingual Neural Machine Translation System, which would be capable of translating Red Hen Lab's TV News Transcripts from different source languages to English. 
 
@@ -8,8 +8,8 @@ The system uses Reinforcement Learning(Advantage-Actor-Critic algorithm) on the 
 
 This project is inspired by the approaches mentioned in the paper [An Actor-Critic Algorithm for Sequence Prediction](https://arxiv.org/pdf/1607.07086).
 
-I have made a GSoC blog, please refer to it for my all GSoC blogposts about the progress made so far.
-Blog link: https://vikrant97.github.io/gsoc_blog/
+I have made a GSoC blog, please refer to it for my all GSoC blog posts about the progress made so far.
+Blog link: [GSoC Blog](https://vikrant97.github.io/gsoc_blog/)
 
 The following languages are supported as the source language & the below are their language codes:
 1) **German - de**
@@ -35,7 +35,7 @@ The target language is English(en).
 
 ### Installation & Setup Instructions on CASE HPC
 
-* Users who want the pipeline to work on case HPC, just copy the directory named **nmt** from the home directory of my hpc acoount i.e **/home/vxg195** & then follow the instructions described for training & translation.
+* Users who want the pipeline to work on case HPC, just copy the directory named **nmt** from the home directory of my hpc account i.e **/home/vxg195** & then follow the instructions described for training & translation.
 
 * nmt directory will contain the following subdirectories:
   * singularity
@@ -54,7 +54,7 @@ The target language is English(en).
   * test.$src-$tgt.$src.processed
   * test.$src-$tgt.$tgt.processed
 
-* The **models** directory consists of trained models for the respective language pairs and also follows the same structure of subdirectories as **data** directory. For example, **models/de-en** will contains trained models for the **German-English** language pair.
+* The **models** directory consists of trained models for the respective language pairs and also follows the same structure of subdirectories as **data** directory. For example, **models/de-en** will contain trained models for the **German-English** language pair.
 
 * The following commands were used to install dependencies for the project:
   ```bash
@@ -62,7 +62,7 @@ The target language is English(en).
   $ virtualenv myenv
   $ source myenv/bin/activate
   $ pip install -r Neural-Machine-Translation/requirements.txt
-  ```
+
 * **Note** that the virtual environment(myenv) created using virtualenv command mentioned above, should be of **Python2** .
 
 ## Data Preparation and Preprocessing
@@ -76,7 +76,9 @@ Please note that these data preparation steps have to be done manually as we are
   * test.$src-$tgt.$src
   * test.$src-$tgt.$tgt
 
-2) Now create an empty directory named $src-$tgt in the Neural-Machine-Translation/subword_nmt directory. Copy the file named "prepare_data.sh" into the language subdirectory for which we need to prepare the dataset. Then use the following commands to process the dataset for training:
+2) Now create an empty directory named $src-$tgt in the Neural-Machine-Translation/subword_nmt directory. Copy the file named "prepare_data.sh" into the language subdirectory for which we need to prepare the dataset. Then use the following commands
+
+ to process the dataset for training:
  ```bash
  bash prepare_data.sh $src $tgt
  ```
@@ -114,6 +116,7 @@ For evaluation, generate translation of any source test corpora. Now, we need to
 perl scripts/multi-bleu.perl $reference-file < $hypothesis-file
 ```
 
+
 ## Acknowledgements
 
 * [Google Summer of Code 2018](https://summerofcode.withgoogle.com/)
@@ -122,3 +125,4 @@ perl scripts/multi-bleu.perl $reference-file < $hypothesis-file
 * [An Actor-Critic Algorithm for Sequence Prediction](https://arxiv.org/pdf/1607.07086)
 * [Europarl](http://www.statmt.org/europarl/)
 * [Moses](https://github.com/moses-smt/mosesdecoder)
+```
