@@ -63,6 +63,12 @@ The target language is English(en).
   $ source myenv/bin/activate
   $ pip install -r Neural-Machine-Translation/requirements.txt
   ```
+
+*in case you are a windows user , you could use the following line instead of ```$ source myenv/bin/activate``` 
+
+```cd myenv/bin/
+activate```
+
 * **Note** that the virtual environment(myenv) created using virtualenv command mentioned above, should be of **Python2** .
 
 ## Data Preparation and Preprocessing
