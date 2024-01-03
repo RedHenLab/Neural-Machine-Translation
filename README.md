@@ -64,7 +64,7 @@ The target language is English(en).
   $ pip install -r Neural-Machine-Translation/requirements.txt
   ```
 
-*in case you are a windows user , you could use the following line instead of ```$ source myenv/bin/activate``` 
+* In case you are a windows user , you could use the following line instead of ```$ source myenv/bin/activate``` 
 
 ```bash
 cd myenv/bin
