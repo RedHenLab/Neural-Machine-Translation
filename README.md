@@ -63,6 +63,15 @@ The target language is English(en).
   $ source myenv/bin/activate
   $ pip install -r Neural-Machine-Translation/requirements.txt
   ```
+  * The following commands were used to install dependencies for the project in the windows:
+  ```bash
+  $ git clone https://github.com/RedHenLab/Neural-Machine-Translation.git
+  $ cd Neural-Machine-Translation
+  $ myenv\Scripts\activate
+  $ .\myenv\Scripts\Activate
+  $ pip install -r requirements.txt
+  ```
+  
 * **Note** that the virtual environment(myenv) created using virtualenv command mentioned above, should be of **Python2** .
 
 ## Data Preparation and Preprocessing
