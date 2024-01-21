@@ -68,7 +68,7 @@ The target language is English(en).
 
    ```
   #### Windows
-  ```bat
+  ```
    git clone https://github.com/RedHenLab/Neural-Machine-Translation.git
    conda create --name myenv python=2.7
    conda activate myenv
