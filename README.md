@@ -67,7 +67,7 @@ The target language is English(en).
 
 ## Data Preparation and Preprocessing
 
-Please note that these data preparation steps have to be done manually as we are dealing with a Multilingual system and each language pair might have different sources of data. For instance, I used many different data sources like europarl, newscommentary, commoncrawl & other opern source datasets. One can have a look at shared task on Machine Translation i.e. WMT, to get better datasets. I wrote a bash script which can be used to process & prepare dataset for MT. The following steps can be used to prepare dataset for MT:
+Please note that these data preparation steps have to be done manually as we are dealing with a Multilingual system and each language pair might have different sources of data. For instance, I used many different data sources like europarl, newscommentary, commoncrawl & other open source datasets. One can have a look at shared task on Machine Translation i.e. WMT, to get better datasets. I wrote a bash script which can be used to process & prepare dataset for MT. The following steps can be used to prepare dataset for MT:
 1) First copy the raw dataset files in the language($src-$tgt) subdirectory of the data directory in the following format:
   * train.$src-$tgt.$src
   * train.$src-$tgt.$tgt
