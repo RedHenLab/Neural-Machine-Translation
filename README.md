@@ -60,7 +60,10 @@ The target language is English(en).
   ```bash
   $ git clone https://github.com/RedHenLab/Neural-Machine-Translation.git
   $ virtualenv myenv
-  $ source myenv/bin/activate
+  $ Windows (Command Prompt):
+  $ C:\> myenv\Scripts\activate 
+  $ Windows (PowerShell):
+  $ PS C:\> myenv\Scripts\Activate.ps1
   $ pip install -r Neural-Machine-Translation/requirements.txt
   ```
 * **Note** that the virtual environment(myenv) created using virtualenv command mentioned above, should be of **Python2** .
