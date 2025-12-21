@@ -122,3 +122,15 @@ perl scripts/multi-bleu.perl $reference-file < $hypothesis-file
 * [An Actor-Critic Algorithm for Sequence Prediction](https://arxiv.org/pdf/1607.07086)
 * [Europarl](http://www.statmt.org/europarl/)
 * [Moses](https://github.com/moses-smt/mosesdecoder)
+
+## Notes for New Contributors (Important)
+
+This project was originally developed as part of Google Summer of Code 2018 and relies on software versions that are now deprecated (e.g., Python 2.7, older PyTorch releases, and HPC-specific setups).
+
+New contributors should note the following:
+
+- **Python 2.7 is no longer officially supported.** Updating the codebase to Python 3.x would be a valuable improvement.
+- **Dependency versions may require revision** to work with modern PyTorch and TensorFlow releases.
+- **The CASE HPC setup described above is environment-specific**; contributors working on local machines or cloud platforms may need alternative setup steps.
+
+These limitations also make this repository a good candidate for future work focused on modernization, reproducibility, and improved usability.
