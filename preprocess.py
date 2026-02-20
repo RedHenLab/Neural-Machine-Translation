@@ -57,7 +57,7 @@ def makeVocabulary(filename, size):
     with open(filename) as f:
         for sent in f.readlines():
             for word in sent.split():
-		#vocab.add(word)
+                # vocab.add(word)
                 vocab.add(word.lower())  # Lowercase all words
 
     originalSize = vocab.size()
@@ -107,15 +107,15 @@ def makeData(which, srcFile, tgtFile, srcDicts, tgtDicts):
                                           eosWord=lib.Constants.EOS_WORD)]
             sizes += [len(srcWords)]
         else:
-	    if which!="test":
-            	ignored += 1
-	    else:
-           	src += [srcDicts.convertToIdx(srcWords,
+            if which != "test":
+                ignored += 1
+            else:
+                src += [srcDicts.convertToIdx(srcWords,
                                           lib.Constants.UNK_WORD)]
-            	tgt += [tgtDicts.convertToIdx(tgtWords,
+                tgt += [tgtDicts.convertToIdx(tgtWords,
                                           lib.Constants.UNK_WORD,
                                           eosWord=lib.Constants.EOS_WORD)]
-            	sizes += [len(srcWords)]
+                sizes += [len(srcWords)]
 		
 
         count += 1

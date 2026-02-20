@@ -6,8 +6,6 @@ import time
 
 import torch
 import torch.nn as nn
-from torch import cuda
-from torch.autograd import Variable
 
 import lib
 
@@ -113,17 +111,21 @@ torch.manual_seed(opt.seed)
 np.random.seed(opt.seed)
 random.seed(opt.seed)
 
-opt.cuda = len(opt.gpus)
+# Set up device
+if len(opt.gpus) > 0 and torch.cuda.is_available():
+    device = torch.device(f'cuda:{opt.gpus[0]}')
+    torch.cuda.manual_seed(opt.seed)
+    opt.cuda = True
+else:
+    device = torch.device('cpu')
+    opt.cuda = False
+    if torch.cuda.is_available():
+        print("WARNING: You have a CUDA device, so you should probably run with -gpus")
+
+opt.device = device
 
 if opt.save_dir and not os.path.exists(opt.save_dir):
     os.makedirs(opt.save_dir)
-
-if torch.cuda.is_available() and not opt.cuda:
-    print("WARNING: You have a CUDA device, so you should probably run with -gpus 1")
-
-if opt.cuda:
-    cuda.set_device(opt.gpus[0])
-    torch.cuda.manual_seed(opt.seed)
 
 def init(model):
     for p in model.parameters():
@@ -156,8 +158,6 @@ def create_critic(checkpoint, dicts, opt):
         critic_optim = checkpoint["critic_optim"]
     else:
         critic, critic_optim = create_model(lib.NMTModel, dicts, 1)
-    if opt.cuda:
-        critic.cuda(opt.gpus[0])
     return critic, critic_optim
 
 def main():
@@ -193,9 +193,8 @@ def main():
         optim = checkpoint["optim"]
         opt.start_epoch = checkpoint["epoch"] + 1
 
-    # GPU.
-    if opt.cuda:
-        model.cuda(opt.gpus[0])
+    # Move model to device
+    model = model.to(opt.device)
 
     # Start reinforce training immediately.
     if opt.start_reinforce == -1:
@@ -240,7 +239,6 @@ def main():
         xent_trainer = lib.Trainer(model, bandit_data, test_data, metrics, dicts, optim, opt)
         xent_trainer.train(opt.start_epoch, opt.start_epoch)
     else:
-	print("theek hai")
         xent_trainer = lib.Trainer(model, supervised_data, valid_data, metrics, dicts, optim, opt)
         if use_critic:
             start_time = time.time()
@@ -248,6 +246,7 @@ def main():
             xent_trainer.train(opt.start_epoch, opt.start_reinforce - 1, start_time)
             # Create critic here to not affect random seed.
             critic, critic_optim = create_critic(checkpoint, dicts, opt)
+            critic = critic.to(opt.device)
             # Pretrain critic.
             if opt.critic_pretrain_epochs > 0:
                 reinforce_trainer = lib.ReinforceTrainer(model, critic, supervised_data, test_data,

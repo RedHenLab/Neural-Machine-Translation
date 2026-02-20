@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
 
 
 class BaseGenerator(nn.Module):
@@ -14,26 +13,26 @@ class BaseGenerator(nn.Module):
         return self.generator(inputs.contiguous().view(-1, inputs.size(-1)))
 
     def backward(self, outputs, targets, weights, normalizer, criterion, regression=False):
-        outputs = Variable(outputs.data, requires_grad=True)
+        outputs = outputs.detach().requires_grad_(True)
 
         logits = outputs.contiguous().view(-1) if regression else self.forward(outputs)
 
         loss = criterion(logits, targets.contiguous().view(-1), weights.contiguous().view(-1))
         loss.div(normalizer).backward()
-        loss = loss.data[0]
+        loss_value = loss.item()
 
         if outputs.grad is None:
             grad_output = torch.zeros(outputs.size())
         else:
             grad_output = outputs.grad.data
 
-        return grad_output, loss
+        return grad_output, loss_value
 
     def predict(self, outputs, targets, weights, criterion):
         logits = self.forward(outputs)
         preds = logits.data.max(1)[1].view(outputs.size(0), -1)
 
-        loss = criterion(logits, targets.contiguous().view(-1), weights.contiguous().view(-1)).data[0]
+        loss = criterion(logits, targets.contiguous().view(-1), weights.contiguous().view(-1)).item()
 
         return preds, loss
 

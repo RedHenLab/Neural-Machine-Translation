@@ -1,11 +1,10 @@
-from torch.autograd import Variable
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 def weighted_xent_loss(logits, targets, weights):
-    log_dist = F.log_softmax(logits)
+    log_dist = F.log_softmax(logits, dim=-1)
     losses = -log_dist.gather(1, targets.unsqueeze(1)).squeeze(1)
     losses = losses * weights
     return losses.sum()

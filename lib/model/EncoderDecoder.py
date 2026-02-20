@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
 from torch.nn.utils.rnn import pad_packed_sequence as unpack
 from torch.nn.utils.rnn import pack_padded_sequence as pack
 
@@ -103,7 +102,7 @@ class NMTModel(nn.Module):
     def make_init_decoder_output(self, context):
         batch_size = context.size(1)
         h_size = (batch_size, self.decoder.hidden_size)
-        return Variable(context.data.new(*h_size).zero_(), requires_grad=False)
+        return torch.zeros(h_size, dtype=context.dtype, device=context.device)
 
     def _fix_enc_hidden(self, h):
         #  the encoder hidden is  (layers*directions) x batch x dim
@@ -122,10 +121,10 @@ class NMTModel(nn.Module):
         init_output = self.make_init_decoder_output(context)
         enc_hidden = (self._fix_enc_hidden(enc_hidden[0]),
                       self._fix_enc_hidden(enc_hidden[1]))
-        init_token = Variable(torch.LongTensor(
-            [lib.Constants.BOS] * init_output.size(0)), volatile=eval)
-        if self.opt.cuda:
-            init_token = init_token.cuda()
+        init_token = torch.full((init_output.size(0),), lib.Constants.BOS, 
+                               dtype=torch.long, device=context.device)
+        if not eval:
+            init_token.requires_grad_(False)
         emb = self.decoder.word_lut(init_token)
         return tgt, (emb, init_output, enc_hidden, context.transpose(0, 1))
 
@@ -152,19 +151,19 @@ class NMTModel(nn.Module):
         
         preds = [] 
         batch_size = targets.size(1)
-        num_eos = targets[0].data.byte().new(batch_size).zero_()
+        num_eos = torch.zeros(batch_size, dtype=torch.bool, device=targets.device)
 
         for i in range(max_length):
             output, hidden = self.decoder.step(emb, output, hidden, context)
             logit = self.generator(output)
-            pred = logit.max(1)[1].view(-1).data
+            pred = logit.max(1)[1].view(-1)
             preds.append(pred)
 
             # Stop if all sentences reach EOS.
             num_eos |= (pred == lib.Constants.EOS)
             if num_eos.sum() == batch_size: break
 
-            emb = self.decoder.word_lut(Variable(pred))
+            emb = self.decoder.word_lut(pred)
 
         preds = torch.stack(preds)
         return preds
@@ -176,20 +175,20 @@ class NMTModel(nn.Module):
         outputs = []
         samples = []
         batch_size = targets.size(1)
-        num_eos = targets[0].data.byte().new(batch_size).zero_()
+        num_eos = torch.zeros(batch_size, dtype=torch.bool, device=targets.device)
 
         for i in range(max_length):
             output, hidden = self.decoder.step(emb, output, hidden, context)
             outputs.append(output)
-            dist = F.softmax(self.generator(output))
-            sample = dist.multinomial(1, replacement=False).view(-1).data
+            dist = F.softmax(self.generator(output), dim=-1)
+            sample = dist.multinomial(1, replacement=False).view(-1)
             samples.append(sample)
 
             # Stop if all sentences reach EOS.
             num_eos |= (sample == lib.Constants.EOS)
             if num_eos.sum() == batch_size: break
 
-            emb = self.decoder.word_lut(Variable(sample))
+            emb = self.decoder.word_lut(sample)
 
         outputs = torch.stack(outputs)
         samples = torch.stack(samples)

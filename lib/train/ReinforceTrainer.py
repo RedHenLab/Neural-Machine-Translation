@@ -3,7 +3,6 @@ import math
 import os
 import time
 
-from torch.autograd import Variable
 import torch
 
 import lib
@@ -130,11 +129,13 @@ class ReinforceTrainer(object):
             if self.pert_func is not None:
                 rewards = self.pert_func(rewards)
 
-            samples = Variable(torch.LongTensor(samples).t().contiguous())
-            rewards = Variable(torch.FloatTensor([rewards] * samples.size(0)).contiguous())
+            samples = torch.LongTensor(samples).t().contiguous()
+            rewards = torch.FloatTensor([rewards] * samples.size(0)).contiguous()
             if self.opt.cuda:
-                samples = samples.cuda()
-                rewards = rewards.cuda()
+                samples = samples.to(self.opt.device)
+                rewards = rewards.to(self.opt.device)
+            samples.requires_grad_(False)
+            rewards.requires_grad_(False)
 
             # Update critic.
             critic_weights = samples.ne(lib.Constants.PAD).float()
@@ -150,7 +151,7 @@ class ReinforceTrainer(object):
             # Update actor
             if not pretrain_critic and not no_update:
                 # Subtract baseline from reward
-                norm_rewards = Variable((rewards - baselines).data)
+                norm_rewards = (rewards - baselines).detach()
                 actor_weights = norm_rewards * critic_weights
                 # TODO: can use PyTorch reinforce() here but that function is a black box.
                 # This is an alternative way where you specify an objective that gives the same gradient

@@ -1,10 +1,7 @@
-from __future__ import division
-
 import math
 import random
 
 import torch
-from torch.autograd import Variable
 
 import lib
 
@@ -43,7 +40,7 @@ class Dataset(object):
         tgtBatch = self._batchify(self.tgt[index*self.batchSize:(index+1)*self.batchSize])
 
         # within batch sort by decreasing length.
-        indices = range(len(srcBatch))
+        indices = list(range(len(srcBatch)))
         batch = zip(indices, srcBatch, tgtBatch)
         batch, lengths = zip(*sorted(zip(batch, lengths), key=lambda x: -x[1]))
         indices, srcBatch, tgtBatch = zip(*batch)
@@ -52,7 +49,8 @@ class Dataset(object):
             b = torch.stack(b, 0).t().contiguous()
             if self.cuda:
                 b = b.cuda()
-            b = Variable(b, volatile=self.eval)
+            # Don't use volatile parameter - use torch.no_grad() context manager instead
+            b.requires_grad_(not self.eval)
             return b
 
         return (wrap(srcBatch), lengths), wrap(tgtBatch), indices

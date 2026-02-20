@@ -1,4 +1,4 @@
-from __future__ import division
+import torch
 import lib
 
 class Evaluator(object):
@@ -20,38 +20,39 @@ class Evaluator(object):
 
         all_preds = []
         all_targets = []
-        for i in range(len(data)):
-            batch = data[i]
-            targets = batch[1]
+        
+        with torch.no_grad():  # Use no_grad for evaluation
+            for i in range(len(data)):
+                batch = data[i]
+                targets = batch[1]
 
-            attention_mask = batch[0][0].data.eq(lib.Constants.PAD).t()
-            self.model.decoder.attn.applyMask(attention_mask)
-            outputs = self.model(batch, True)
+                attention_mask = batch[0][0].data.eq(lib.Constants.PAD).t()
+                self.model.decoder.attn.applyMask(attention_mask)
+                outputs = self.model(batch, True)
 
+                weights = targets.ne(lib.Constants.PAD).float()
+                num_words = weights.data.sum()
+                _, loss = self.model.predict(outputs, targets, weights, self.loss_func)
 
-            weights = targets.ne(lib.Constants.PAD).float()
-            num_words = weights.data.sum()
-            _, loss = self.model.predict(outputs, targets, weights, self.loss_func)
+                preds = self.model.translate(batch, self.max_length)
+                preds = preds.t().tolist()
+                targets = targets.data.t().tolist()
+                rewards, _ = self.sent_reward_func(preds, targets)
 
-            preds = self.model.translate(batch, self.max_length)
-            preds = preds.t().tolist()
-            targets = targets.data.t().tolist()
-            rewards, _ = self.sent_reward_func(preds, targets)
+                # hack
+                indices = batch[2]
+                new_batch = zip(preds, targets)
+                new_batch, indices = zip(*sorted(zip(new_batch, indices), key=lambda x: x[1]))
+                preds, targets = zip(*new_batch)
+                ###
 
-	    #hack
-	    indices=batch[2]
-	    new_batch=zip(preds,targets)
-	    new_batch,indices=zip(*sorted(zip(new_batch,indices),key=lambda x: x[1]))
-	    preds,targets=zip(*new_batch)
-            ###
+                all_preds.extend(preds)
+                all_targets.extend(targets)
 
-	    all_preds.extend(preds)
-            all_targets.extend(targets)
-	    
-            total_loss += loss
-            total_words += num_words
-            total_sent_reward += sum(rewards)
-            total_sents += batch[1].size(1)
+                total_loss += loss
+                total_words += num_words
+                total_sent_reward += sum(rewards)
+                total_sents += batch[1].size(1)
 
         loss = total_loss / total_words
         sent_reward = total_sent_reward / total_sents
@@ -69,9 +70,9 @@ class Evaluator(object):
             for sent in preds:
                 sent = lib.Reward.clean_up_sentence(sent, remove_unk=False, remove_eos=True)
                 sent = [self.dicts["tgt"].getLabel(w) for w in sent]
-                x=" ".join(sent)+'\n'
-		f.write(x)
-	f.close()
+                x = " ".join(sent) + '\n'
+                f.write(x)
+        f.close()
         loss, sent_reward, corpus_reward = metrics
         print("")
         print("Loss: %.6f" % loss)
